@@ -1,0 +1,8 @@
+[package]
+name = "stree"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+toml = "0.9.5"
+serde = { workspace = true, features = ["derive"] }
