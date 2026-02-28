@@ -4,4 +4,3 @@ members = ["cli", "stree"]
 
 [workspace.dependencies]
 serde = { version = "1.0.219", features = ["derive"] }
-
