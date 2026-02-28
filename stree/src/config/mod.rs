@@ -5,6 +5,11 @@ use serde::{Deserialize, Serialize};
 
 mod credential;
 
+/*
+    [TESTING]: Add configuration
+    Create system config
+    #improvement #high
+*/
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
     endpoint: Option<String>,
@@ -31,7 +36,11 @@ impl Config {
         let path = Path::new(&filename);
         let parent = path.parent().unwrap();
         if !parent.exists() && create_dir(parent).is_err() {
-            // [TODO]: Add good error handling
+            /*
+                [TODO]: Create a error handling system
+                Change the error handling system on the app
+                #improvement #low
+            */
             return Err(String::from("An error occurred"));
         }
         fs::write(path, toml::to_string(self).unwrap()).unwrap();

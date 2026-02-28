@@ -3,6 +3,12 @@ use std::env::home_dir;
 use stree::config;
 
 fn main() {
+    /*
+        [READY]: Create base command handler
+        Create base command handler for basics
+        command in stree app
+        #cli #improvement #high
+     */
     let default_config_file = "/.config/stree/config.toml";
 
     if let Some(dir) = home_dir() {
