@@ -1,21 +1,35 @@
-use std::env::home_dir;
+use clap::Parser;
+use crate::commands::{Root, list::ListOption};
+use anyhow::Result;
 
-use stree::config;
+mod commands;
+mod utils;
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<()> {
     /*
         [READY]: Create base command handler
         Create base command handler for basics
         command in stree app
         #cli #improvement #high
      */
-    let default_config_file = "/.config/stree/config.toml";
+    let args = Root::parse();
+    let config = utils::config::load_config(args.config);
 
-    if let Some(dir) = home_dir() {
-        let config_dir =  dir.to_str().unwrap().to_owned() + default_config_file;
-        println!("{config_dir}");
-        let config = config::Config::load(config_dir);
-        dbg!(config);
+    if let Some(cfg) = config {
+        match args.commands {
+            commands::Command::Ls { bucket, limit, marker, prefix } => {
+                commands::list::list(&cfg, ListOption { bucket, limit, marker, prefix }).await?;
+            }
+            commands::Command::Rm { bucket, keys } => {
+                dbg!(keys);
+                dbg!(bucket);
+            },
+            commands::Command::Download { bucket: _, keys: _ } => todo!(""),
+            _ => todo!("")
+        }
     }
-   
+
+  
+    Ok(())
 }

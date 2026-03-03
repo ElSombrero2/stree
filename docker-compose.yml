@@ -1,0 +1,15 @@
+version: '3'
+services:
+  s3:
+    container_name: 'stree-s3'
+    image: "quay.io/minio/aistor/minio:latest"
+    environment:
+      MINIO_ROOT_USER: 'root'
+      MINIO_ROOT_PASSWORD: 'rootpassword'
+    command: ["minio", "server", "/data", "--console-address", ":9001"]
+    ports:
+      - 9001:9001
+      - 9000:9000
+    volumes:
+      - './.volumes/data:/data'
+      - './minio.license:/minio.license'

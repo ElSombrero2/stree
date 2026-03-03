@@ -1,0 +1,4 @@
+endpoint = "http://127.0.0.1:9000"
+credential = { access_key = "my-access-key", secret_key = "my-secret-key" }
+force_path_style = true
+region = "eu-central-1"

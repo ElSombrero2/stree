@@ -12,13 +12,14 @@ mod credential;
 */
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
-    endpoint: Option<String>,
-    credential: Option<Credential>,
-    bucket: Option<String>,
+    pub endpoint: Option<String>,
+    pub credential: Option<Credential>,
+    pub force_path_style: Option<bool>,
+    pub region: Option<String>,
 }
 
 impl Config {
-    pub fn load(path: String) -> Config {
+    pub fn load(path: String, save: bool) -> Config {
         if fs::exists(&path).unwrap() {
            let content = fs::read_to_string(path).unwrap();
            return toml::from_str::<Config>(&content).unwrap();
@@ -26,9 +27,12 @@ impl Config {
         let default = Config {
             endpoint: None,
             credential: None,
-            bucket: None,
+            force_path_style: Some(false),
+            region: None,
         };
-        default.save(String::from(&path)).unwrap();        
+        if save {
+            default.save(String::from(&path)).unwrap();
+        }        
         default
     }
 

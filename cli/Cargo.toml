@@ -5,6 +5,10 @@ edition = "2024"
 
 [dependencies]
 stree = { path = "../stree"}
+clap = { version = "4.5.60", features = ["derive"] }
+tokio = { workspace = true, features = ["full"] }
+anyhow = { workspace = true } 
+
 
 [[bin]]
 name = "stree"

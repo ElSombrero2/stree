@@ -6,3 +6,6 @@ edition = "2024"
 [dependencies]
 toml = "0.9.5"
 serde = { workspace = true, features = ["derive"] }
+aws-sdk-s3 = { version = "=1.85.0" }
+anyhow = { workspace = true }
+tokio = { workspace = true, features = ["full"]}

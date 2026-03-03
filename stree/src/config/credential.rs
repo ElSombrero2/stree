@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Credential {
-   access_key: Option<String>,
-   secret_key: Option<String>,
+   pub access_key: Option<String>,
+   pub secret_key: Option<String>,
 }
