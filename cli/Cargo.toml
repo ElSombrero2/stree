@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 stree = { path = "../stree"}
 clap = { version = "4.5.60", features = ["derive"] }
+comfy-table = "7.2.2"
 tokio = { workspace = true, features = ["full"] }
 anyhow = { workspace = true } 
 

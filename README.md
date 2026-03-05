@@ -1,3 +1,7 @@
 # Stree S3 Client
-A user friendly cli and desktop app for managing easily your S3
+A user friendly open source tool for managing easily your S3
 file system
+
+# CLI
+
+# Studio

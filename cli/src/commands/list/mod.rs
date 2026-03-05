@@ -1,5 +1,7 @@
 use anyhow::Result;
-use stree::{config::Config, get_client};
+use stree::{config::Config, s3::{S3, list::{BucketListOption, ObjectListOption}}};
+
+use crate::utils::table::get_table;
 
 #[derive(Debug)]
 pub struct ListOption {
@@ -10,29 +12,40 @@ pub struct ListOption {
 }
 
 pub async fn list(config: &Config, option: ListOption) -> Result<()> {
-    let client = get_client(config).await.unwrap();
-    if let Some(bucket) = option.bucket {
-      let res= client.list_objects()
-      .bucket(bucket)
-      .set_marker(option.marker)
-      .set_max_keys(option.limit)
-      .set_prefix(option.prefix)
-      .send().await;
+    let client = S3::new(config);
+    let mut table= get_table();
 
-      if let Ok(res) = res {
-        for data in res.contents() {
-          println!("📇 {}\t\t{}", data.key().unwrap(), data.last_modified().unwrap());
-        }
+    if let Some(bucket) = option.bucket {
+      table.set_header(vec!["Name", "Size", "Last modified"]);
+      let objects = client.object_list(ObjectListOption {
+        bucket,
+        limit: option.limit,
+        marker: option.marker,
+        prefix: option.prefix 
+      }).await; 
+
+      for object in objects {
+        table.add_row(vec![
+          "📜 ".to_owned() + &object.key,
+          object.size.to_string(),
+          object.last_modified
+        ]);
       }
     } else {
-      let res = client.list_buckets()
-      .set_max_buckets(option.limit)
-      .send().await;
-      if let Ok(result) = res {
-         for bucket in result.buckets() {
-          println!("📁 {}", bucket.name().unwrap());
-      }
+      table.set_header(vec!["Name", "Creation date"]);
+      let buckets = client.bucket_list(BucketListOption {
+        token: option.marker,
+        limit: option.limit,
+        prefix: option.prefix,
+      }).await; 
+
+      for bucket in buckets {
+        table.add_row(vec![
+          "📂 ".to_owned() + &bucket.name,
+          bucket.creation_date,
+        ]);
       }
     }
+    println!("{table}");
     Ok(())
 }
