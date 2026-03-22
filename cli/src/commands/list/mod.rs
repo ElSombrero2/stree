@@ -1,4 +1,5 @@
 use anyhow::Result;
+use comfy_table::presets;
 use stree::{config::Config, s3::{S3, list::{BucketListOption, ObjectListOption}}};
 
 use crate::utils::table::get_table;
@@ -13,7 +14,7 @@ pub struct ListOption {
 
 pub async fn list(config: &Config, option: ListOption) -> Result<()> {
     let client = S3::new(config);
-    let mut table= get_table();
+    let mut table= get_table(presets::NOTHING);
 
     if let Some(bucket) = option.bucket {
       table.set_header(vec!["Name", "Size", "Last modified"]);

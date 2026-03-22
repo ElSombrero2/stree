@@ -21,11 +21,15 @@ async fn main() -> Result<()> {
             commands::Command::Ls { bucket, limit, marker, prefix } => {
                 commands::list::list(&cfg, ListOption { bucket, limit, marker, prefix }).await?;
             }
-            commands::Command::Rm { bucket, keys } => {
-                dbg!(keys);
-                dbg!(bucket);
+            commands::Command::Info { bucket, key, version } => {
+                commands::info::get_info(&cfg, bucket, key, version).await;
+            }
+            commands::Command::Rm { key, bucket } => {
+                 commands::delete::remove(&cfg, bucket, key).await;
             },
-            commands::Command::Download { bucket: _, keys: _ } => todo!(""),
+            commands::Command::Download { bucket, keys, path } => {
+                commands::download::download(&cfg, bucket, path, keys).await;
+            },
             _ => todo!("")
         }
     }
