@@ -7,6 +7,7 @@ pub mod delete;
 pub mod download;
 pub mod info;
 pub mod types;
+pub mod upload;
 
 pub struct S3 { client: Client }
 

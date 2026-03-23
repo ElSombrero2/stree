@@ -4,6 +4,7 @@ pub mod list;
 pub mod info;
 pub mod delete;
 pub mod download;
+pub mod upload;
 
 ///{n}   _________ __                         
 ///{n}  /   _____//  |________   ____   ____  
@@ -33,13 +34,19 @@ pub enum Command {
     key: Option<String>,
     #[arg(short, long)]
     bucket: String,
+    #[arg(short, long)]
+    yes: bool,
   },
   /// Upload a new file inside a bucket
   Upload {
     #[arg(short, long)] 
-    path: String,
+    bucket: String,
     #[arg(short, long)]
     key: String,
+    #[arg(short, long)]
+    file: String,
+    #[arg(short, long)]
+    yes: bool,
   },
   /// Download a file
   Download { 

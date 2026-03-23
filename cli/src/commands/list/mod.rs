@@ -1,4 +1,3 @@
-use anyhow::Result;
 use comfy_table::presets;
 use stree::{config::Config, s3::{S3, list::{BucketListOption, ObjectListOption}}};
 
@@ -12,7 +11,7 @@ pub struct ListOption {
   pub prefix: Option<String>
 }
 
-pub async fn list(config: &Config, option: ListOption) -> Result<()> {
+pub async fn list(config: &Config, option: ListOption) {
     let client = S3::new(config);
     let mut table= get_table(presets::NOTHING);
 
@@ -48,5 +47,4 @@ pub async fn list(config: &Config, option: ListOption) -> Result<()> {
       }
     }
     println!("{table}");
-    Ok(())
 }
