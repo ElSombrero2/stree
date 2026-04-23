@@ -1,5 +1,5 @@
 use clap::Parser;
-use crate::commands::{Root, list::ListOption};
+use crate::commands::{list::ListOption, Root};
 use anyhow::Result;
 
 mod commands;
@@ -15,8 +15,11 @@ async fn main() -> Result<()> {
      */
     let args = Root::parse();
     let config = utils::config::load_config(args.config);
-
-    if let Some(cfg) = config {
+    
+    if let commands::Command::Init { filename } = args.commands {
+        let path = filename.unwrap_or(String::from("./.stree.toml"));
+        commands::init::init(path);
+    } else if let Ok(cfg) = config {
         match args.commands {
             commands::Command::Ls { bucket, limit, marker, prefix } => commands::list::list(&cfg, ListOption { bucket, limit, marker, prefix }).await,
             commands::Command::Info { bucket, key, version } => commands::info::get_info(&cfg, bucket, key, version).await,
@@ -25,6 +28,8 @@ async fn main() -> Result<()> {
             commands::Command::Upload { file, key, bucket, yes } => commands::upload::upload_file(&cfg, bucket, key, file, yes).await,
             _ => todo!("Not implemented"),
         }
+    } else { 
+        println!("⚠️ Configuration not found, specify your config file or init it in your folder");
     }
 
   

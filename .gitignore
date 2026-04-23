@@ -3,3 +3,4 @@
 .env
 minio.license
 .volumes
+.stree.toml

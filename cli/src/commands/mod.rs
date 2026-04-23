@@ -5,6 +5,7 @@ pub mod info;
 pub mod delete;
 pub mod download;
 pub mod upload;
+pub mod init;
 
 ///{n}   _________ __                         
 ///{n}  /   _____//  |________   ____   ____  
@@ -70,6 +71,12 @@ pub enum Command {
   Studio {
     #[arg(short, long)]
     port: String,
+  },
+  /// calling this method will create a .stree.toml file and add it inside your gitignore if
+  /// gitignore is found
+  Init {
+      #[arg(short, long)]
+      filename: Option<String>,
   }
 }
 
