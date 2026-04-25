@@ -26,7 +26,8 @@ async fn main() -> Result<()> {
             commands::Command::Rm { key, bucket, yes } => commands::delete::remove(&cfg, bucket, key, yes).await,
             commands::Command::Download { bucket, keys, path } => commands::download::download(&cfg, bucket, path, keys).await,
             commands::Command::Upload { file, key, bucket, yes } => commands::upload::upload_file(&cfg, bucket, key, file, yes).await,
-            _ => todo!("Not implemented"),
+            commands::Command::Studio { port } => api::serve().await,
+            _ => println!("You have already your .stree.toml file"),
         }
     } else { 
         println!("⚠️ Configuration not found, specify your config file or init it in your folder");
