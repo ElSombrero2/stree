@@ -12,8 +12,8 @@ region = ""
         if !exists {
             fs::write(&filename, EMPTY_CONFIG).unwrap();
             let gitignore_path = "./.gitignore";
-            if let Ok(mut gitignore) = fs::read_to_string(&gitignore_path) {
-                gitignore.push_str(&format!("{}", filename.replace("./", "")));
+            if let Ok(mut gitignore) = fs::read_to_string(gitignore_path) {
+                gitignore.push_str(&filename.replace("./", ""));
                 fs::write(gitignore_path, gitignore).unwrap();
             }
             println!("✅ Project initialized!");

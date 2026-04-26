@@ -28,6 +28,8 @@ pub enum Command {
     marker: Option<String>,
     #[arg(short, long)]
     prefix: Option<String>,
+    #[arg(short, long)]
+    directory: Option<String>,
   },
   /// Remove a file from a bucket
   Rm {
@@ -70,7 +72,7 @@ pub enum Command {
   /// Open the web studio on the specified port (6060 by default)
   Studio {
     #[arg(short, long)]
-    port: String,
+    port: u16,
   },
   /// calling this method will create a .stree.toml file and add it inside your gitignore if
   /// gitignore is found

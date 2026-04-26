@@ -4,7 +4,7 @@ use stree::{config::Config, s3::S3};
 
 fn get_file_name(key: String) -> String {
     let splited_key: Vec<&str> = key.split('/').collect();
-    return String::from(splited_key[splited_key.len() - 1]);
+    String::from(splited_key[splited_key.len() - 1])
 }
 
 pub async fn download (cfg: &Config, bucket: String, path: String, keys: Vec<String>) {

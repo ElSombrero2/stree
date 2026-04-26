@@ -4,13 +4,19 @@ import { RouterProvider } from 'react-router'
 import { router } from './components/router'
 import { Header } from './components/organisms/header/Header'
 import './index.css'
+import { Sidenav } from './components/organisms/sidenav/Sidenav'
 
 function App() {
   return (
     <>
-			<Header />
-			<RouterProvider router={router} />
-    </>
+			<div className="flex w-full">
+				<Sidenav />
+				<div className="flex flex-col w-full">
+					<Header />
+					<RouterProvider router={router} />
+				</div>
+			</div>
+		</>
   )
 }
 
